@@ -8,12 +8,7 @@ import com.devapps.notas.model.Note
 
 class MainActivity : AppCompatActivity() {
 
-    private val notes = mutableListOf(
-        Note("Nota 1", "Primeira nota inserida"),
-        Note("Nota 2", "Segunda nota inserida"),
-        Note("Nota 3", "Terceira nota inserida"),
-        Note("Nota 4", "Quarta nota inserida")
-    )
+    private lateinit var notes: MutableList<Note>
 
     private val mNoteAdapter by lazy { NoteAdapter(this, notes) }
     private lateinit var binding: ActivityMainBinding
@@ -24,7 +19,17 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        initNotes()
+
         setupListView()
+    }
+
+    private fun initNotes() {
+        notes = mutableListOf()
+        for (i in 1..10000) {
+            var note = Note("Nota $i", "Nota $i inserida.")
+            notes.add(note)
+        }
     }
 
     private fun setupListView() {
