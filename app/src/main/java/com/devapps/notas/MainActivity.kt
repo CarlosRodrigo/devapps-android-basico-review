@@ -2,7 +2,9 @@ package com.devapps.notas
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.devapps.notas.adapter.NoteAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.devapps.notas.adapter.NoteRecyclerAdapter
 import com.devapps.notas.databinding.ActivityMainBinding
 import com.devapps.notas.model.Note
 
@@ -10,7 +12,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var notes: MutableList<Note>
 
-    private val mNoteAdapter by lazy { NoteAdapter(this, notes) }
+    private val mNoteAdapter by lazy { NoteRecyclerAdapter(this, notes) }
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         initNotes()
 
-        setupListView()
+        setupRecyclerView()
     }
 
     private fun initNotes() {
@@ -32,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupListView() {
-        binding.noteList.adapter = mNoteAdapter
+    private fun setupRecyclerView() {
+        binding.noteRecyclerview.adapter = mNoteAdapter
     }
 }
