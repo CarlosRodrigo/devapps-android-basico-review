@@ -36,5 +36,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         binding.noteRecyclerview.adapter = mNoteAdapter
+        val layoutManager = LinearLayoutManager(this)
+        binding.noteRecyclerview.layoutManager = layoutManager
     }
 }
