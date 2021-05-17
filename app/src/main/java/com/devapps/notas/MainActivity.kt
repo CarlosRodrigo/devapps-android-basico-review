@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var notes: MutableList<Note>
 
-    private val mNoteAdapter by lazy { NoteRecyclerAdapter(this, notes) }
+    private val mNoteAdapter by lazy { NoteRecyclerAdapter(notes) }
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
