@@ -15,6 +15,11 @@ class MainActivity : AppCompatActivity() {
     private val mNoteAdapter by lazy { NoteRecyclerAdapter(notes) }
     private lateinit var binding: ActivityMainBinding
 
+    companion object {
+        const val MAIN_ACTIVITY_REQUEST_CODE = 1
+        const val MAIN_ACTIVITY_NOTE_EXTRA = "note_extra"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -27,13 +32,13 @@ class MainActivity : AppCompatActivity() {
 
         binding.addNote.setOnClickListener {
             val intent = Intent(this, AddNoteActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, MAIN_ACTIVITY_REQUEST_CODE)
         }
     }
 
     private fun initNotes() {
         notes = mutableListOf()
-        for (i in 1..10000) {
+        for (i in 1..2) {
             var note = Note("Nota $i", "Nota $i inserida.")
             notes.add(note)
         }
@@ -43,5 +48,16 @@ class MainActivity : AppCompatActivity() {
         binding.noteRecyclerview.adapter = mNoteAdapter
         val layoutManager = LinearLayoutManager(this)
         binding.noteRecyclerview.layoutManager = layoutManager
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            if (requestCode == MAIN_ACTIVITY_REQUEST_CODE) {
+                val note = data?.getParcelableExtra<Note>(MAIN_ACTIVITY_NOTE_EXTRA)
+                note?.let { notes.add(it) }
+                mNoteAdapter.notifyDataSetChanged()
+            }
+        }
     }
 }
