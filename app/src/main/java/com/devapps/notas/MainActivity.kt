@@ -1,9 +1,9 @@
 package com.devapps.notas
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.devapps.notas.adapter.NoteRecyclerAdapter
 import com.devapps.notas.databinding.ActivityMainBinding
 import com.devapps.notas.model.Note
@@ -24,6 +24,11 @@ class MainActivity : AppCompatActivity() {
         initNotes()
 
         setupRecyclerView()
+
+        binding.addNote.setOnClickListener {
+            val intent = Intent(this, AddNoteActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun initNotes() {

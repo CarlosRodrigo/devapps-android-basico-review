@@ -2,4 +2,6 @@
     <string name="app_name">Notas</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
+    <string name="add_note">Add note</string>
+    <string name="save_note">Save note</string>
 </resources>
