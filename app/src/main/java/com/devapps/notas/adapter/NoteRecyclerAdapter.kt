@@ -8,13 +8,21 @@ import com.devapps.notas.R
 import com.devapps.notas.databinding.NoteItemBinding
 import com.devapps.notas.model.Note
 
-class NoteRecyclerAdapter(private  val notes: MutableList<Note>) : RecyclerView.Adapter<NoteRecyclerAdapter.VH>() {
+class NoteRecyclerAdapter(private  val notes: MutableList<Note>,
+                          private val callback: (Note) -> Unit)
+    : RecyclerView.Adapter<NoteRecyclerAdapter.VH>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.note_item, parent, false)
         val binding = NoteItemBinding.bind(view)
 
         val vh = VH(binding)
+
+        vh.itemView.setOnClickListener {
+            val note = notes[vh.adapterPosition]
+            callback(note)
+        }
+
         return vh
     }
 

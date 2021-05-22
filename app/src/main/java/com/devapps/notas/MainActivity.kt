@@ -3,6 +3,7 @@ package com.devapps.notas
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devapps.notas.adapter.NoteRecyclerAdapter
 import com.devapps.notas.databinding.ActivityMainBinding
@@ -12,7 +13,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var notes: MutableList<Note>
 
-    private val mNoteAdapter by lazy { NoteRecyclerAdapter(notes) }
+    private val mNoteAdapter by lazy { NoteRecyclerAdapter(notes, this::onNoteClickListener) }
+
     private lateinit var binding: ActivityMainBinding
 
     companion object {
@@ -59,5 +61,10 @@ class MainActivity : AppCompatActivity() {
                 mNoteAdapter.notifyDataSetChanged()
             }
         }
+    }
+
+    private fun onNoteClickListener(note: Note) {
+        Toast.makeText(this, "Note title: ${note.title}, description: ${note.description}",
+            Toast.LENGTH_LONG).show()
     }
 }
