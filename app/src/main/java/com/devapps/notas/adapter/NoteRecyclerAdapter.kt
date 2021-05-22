@@ -36,12 +36,12 @@ class NoteRecyclerAdapter(private  val notes: MutableList<Note>,
 
     fun remove(position: Int) {
         notes.removeAt(position)
-        notifyDataSetChanged()
+        notifyItemRemoved(position)
     }
 
     fun swap(initPosition: Int, targetPosition: Int) {
         Collections.swap(notes, initPosition, targetPosition)
-        notifyDataSetChanged()
+        notifyItemMoved(initPosition, targetPosition)
     }
 
     class VH(itemView: NoteItemBinding) : RecyclerView.ViewHolder(itemView.root) {
