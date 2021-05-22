@@ -9,7 +9,7 @@ import com.devapps.notas.databinding.NoteItemBinding
 import com.devapps.notas.model.Note
 
 class NoteRecyclerAdapter(private  val notes: MutableList<Note>,
-                          private val callback: (Note) -> Unit)
+                          private val callback: (Note, Int) -> Unit)
     : RecyclerView.Adapter<NoteRecyclerAdapter.VH>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
@@ -20,7 +20,7 @@ class NoteRecyclerAdapter(private  val notes: MutableList<Note>,
 
         vh.itemView.setOnClickListener {
             val note = notes[vh.adapterPosition]
-            callback(note)
+            callback(note, vh.adapterPosition)
         }
 
         return vh

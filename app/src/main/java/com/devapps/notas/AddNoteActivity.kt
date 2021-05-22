@@ -12,12 +12,25 @@ import com.devapps.notas.model.Note
 class AddNoteActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddNoteBinding
+    private var position: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddNoteBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        val note = intent?.getParcelableExtra<Note>(MainActivity.MAIN_ACTIVITY_NOTE_EXTRA)
+        note?.let {
+            binding.addNoteTitle.setText(note.title)
+            binding.addNoteDescription.setText(note.description)
+        }
+
+        val data = intent?.getIntExtra(MainActivity.MAIN_ACTIVITY_NOTE_POSITION_EXTRA, -1)
+        data?.let {
+            position = data
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -33,6 +46,7 @@ class AddNoteActivity : AppCompatActivity() {
             val note = Note(title, description)
             val returnIntent = Intent(this, MainActivity::class.java)
             returnIntent.putExtra(MainActivity.MAIN_ACTIVITY_NOTE_EXTRA, note)
+            returnIntent.putExtra(MainActivity.MAIN_ACTIVITY_NOTE_POSITION_EXTRA, position)
             setResult(Activity.RESULT_OK, returnIntent)
             finish()
             true

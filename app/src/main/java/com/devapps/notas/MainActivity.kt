@@ -19,7 +19,9 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val MAIN_ACTIVITY_REQUEST_CODE = 1
+        const val MAIN_ACTIVITY_REQUEST_CODE_EDIT = 2
         const val MAIN_ACTIVITY_NOTE_EXTRA = "note_extra"
+        const val MAIN_ACTIVITY_NOTE_POSITION_EXTRA = "note_position_extra"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,11 +62,20 @@ class MainActivity : AppCompatActivity() {
                 note?.let { notes.add(it) }
                 mNoteAdapter.notifyDataSetChanged()
             }
+            if (requestCode == MAIN_ACTIVITY_REQUEST_CODE_EDIT) {
+                val note = data?.getParcelableExtra<Note>(MAIN_ACTIVITY_NOTE_EXTRA)
+                val position = data?.getIntExtra(MAIN_ACTIVITY_NOTE_POSITION_EXTRA, -1)
+                notes.removeAt(position!!)
+                notes.add(position!!, note!!)
+                mNoteAdapter.notifyDataSetChanged()
+            }
         }
     }
 
-    private fun onNoteClickListener(note: Note) {
-        Toast.makeText(this, "Note title: ${note.title}, description: ${note.description}",
-            Toast.LENGTH_LONG).show()
+    private fun onNoteClickListener(note: Note, position: Int) {
+        val intent = Intent(this, AddNoteActivity::class.java)
+        intent.putExtra(MAIN_ACTIVITY_NOTE_EXTRA, note)
+        intent.putExtra(MAIN_ACTIVITY_NOTE_POSITION_EXTRA, position)
+        startActivityForResult(intent, MAIN_ACTIVITY_REQUEST_CODE_EDIT)
     }
 }
