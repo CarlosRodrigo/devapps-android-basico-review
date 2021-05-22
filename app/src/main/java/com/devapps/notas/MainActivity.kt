@@ -4,9 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devapps.notas.adapter.NoteRecyclerAdapter
 import com.devapps.notas.databinding.ActivityMainBinding
+import com.devapps.notas.helper.NoteItemTouchHelperCallback
 import com.devapps.notas.model.Note
 
 class MainActivity : AppCompatActivity() {
@@ -52,6 +54,9 @@ class MainActivity : AppCompatActivity() {
         binding.noteRecyclerview.adapter = mNoteAdapter
         val layoutManager = LinearLayoutManager(this)
         binding.noteRecyclerview.layoutManager = layoutManager
+
+        val itemTouchHelper = ItemTouchHelper(NoteItemTouchHelperCallback(mNoteAdapter))
+        itemTouchHelper.attachToRecyclerView(binding.noteRecyclerview)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

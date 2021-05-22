@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devapps.notas.R
 import com.devapps.notas.databinding.NoteItemBinding
 import com.devapps.notas.model.Note
+import java.util.*
 
 class NoteRecyclerAdapter(private  val notes: MutableList<Note>,
                           private val callback: (Note, Int) -> Unit)
@@ -32,6 +33,16 @@ class NoteRecyclerAdapter(private  val notes: MutableList<Note>,
     }
 
     override fun getItemCount() = notes.size
+
+    fun remove(position: Int) {
+        notes.removeAt(position)
+        notifyDataSetChanged()
+    }
+
+    fun swap(initPosition: Int, targetPosition: Int) {
+        Collections.swap(notes, initPosition, targetPosition)
+        notifyDataSetChanged()
+    }
 
     class VH(itemView: NoteItemBinding) : RecyclerView.ViewHolder(itemView.root) {
         private val title = itemView.noteItemTitle
